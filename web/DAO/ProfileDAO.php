@@ -17,15 +17,16 @@ class ProfileDAO {
     }
 
     public function listProfile() {
-        $query = "SELECT*FROM profile";
+        global $connection;
+        $query = "SELECT*FROM perfil";
         $select = $connection->query($query);
         if ($select) {
-            while ($result = $select->fetch_array()) {
+            while ($result = $select->fetch_array(MYSQLI_BOTH)) {
                 $profile = new Profile();
-                $profile->setIdProfile($result["idPeril"]);
+                $profile->setIdProfile(intval($result["idPerfil"]));
                 $profile->setName($result["nome"]);
                 $list = array();
-                array_push($list);
+                array_push($list,$profile);
             }
             $connection->close();
             return $list;

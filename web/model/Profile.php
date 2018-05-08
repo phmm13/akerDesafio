@@ -5,6 +5,7 @@
  *
  * @Author Pedro Henrique
  */
+require 'DAO/ProfileDAO.php';
 class profile {
     var $idProfile;
     var $name;
@@ -26,5 +27,9 @@ class profile {
         $profileDAO = new ProfileDAO();
         $profileDAO->getProfileById($this->profile);
         return $profileDAO;
+    }
+    public function listProfile(){
+        $profileDAO = new ProfileDAO();
+        return $profileDAO->listProfile();
     }
 }

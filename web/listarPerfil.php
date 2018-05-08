@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<!--
+    @Author : Pedro Henrique
+-->
+<?php
+include 'Connection.php';
+include 'model/Profile.php';
+?>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
+    <body>
+        <h1>Lista de perfis</h1>
+        <hr>
+        <?php
+        $profile = new Profile();
+        $profileList = $profile->listProfile();
+        if(empty($profileList)){
+            echo "<p>Nao existem perfis cadastrados</p>";
+        }else{
+        ?>
+        <table border="2">
+            <tr>
+                <th>ID perfil</th>
+                <th>Nome do perfil</th>
+                <th>Opções</th>
+            </tr>
+            <?php
+                foreach ($profileList as $value) {
+                    echo "<tr>";
+                    echo "<td>" . $value->getIdProfile() . "</td>";
+                    echo "<td>" . $value->getName() . "</td>";
+                    echo "<td>" . "</td>"; // link para opções
+                    echo "</tr>";
+                }
+            
+            ?>
+        </table>
+        <?php
+        }
+        ?>
+        
+    </body>
+</html>
