@@ -14,6 +14,7 @@
 class UserDAO {
     
     public function insertUser(User $user){
+        global $connection;
         $query = "INSERT INTO usuario (nome,senha,perfil_idPerfil,dataCriacao,dataLogin) "
                 . "VALUES (?,?,?,STR_TO_DATE(),STR_TO_DATE())";
         $insert = $connection->prepare($query);
@@ -24,6 +25,7 @@ class UserDAO {
         return $insert;
     }
     public function listUser(){
+        global $connection;
         $query = "SELECT*FROM usuario";
         $select = $connection->query($query);
         if($select){
@@ -49,6 +51,7 @@ class UserDAO {
         }
     }
     public function getUserById(User $user){
+        global $connection;
         $query = "SELECT*FROM usuario WHERE idUsuario = ?";
         
         $select = $connection->prepare($query);
@@ -77,6 +80,7 @@ class UserDAO {
         }
     }
     public function updateUser(User $user){
+        global $connection;
         $query = "UPDATE usuario SET nome=?,senha=?,perfil_idPerfil=? WHERE idUsuario=?";
         $insert = $connection->prepare($query);
         $insert->bind_param("ssii",$user->getName(),$user->getPassword(),$user->getProfile()->getIdProfile()
@@ -86,6 +90,7 @@ class UserDAO {
         return $insert;
     }
     public function deleteUser(User $user){
+        global $connection;
         $query = "DELETE usuario WHERE idUsuario = ?";
         $delete = $connection->prepare($query);
         $delete->bind_param("i",$user->getIdUser());
@@ -94,6 +99,7 @@ class UserDAO {
         return $delete;
     }
     public function login(User $user){
+        global $connection;
         $query1 = "SELECT*FROM usuario WHERE nome=? AND senha=?";
         $select = $connection->prepare($query1);
         $select->bind_param("ss",$user->getName(),$user->getPassword());

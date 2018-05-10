@@ -8,7 +8,8 @@
 class ProfileDAO {
 
     public function insertProfile(Profile $profile) {
-        $query = "INSERT INTO profile (nome) values (?)";
+        global $connection;
+        $query = "INSERT INTO perfil (nome) values (?)";
         $insert = $connection->prepare($query);
         $insert->bind_param("s", $profile->getName());
         $insert->execute();
@@ -21,11 +22,12 @@ class ProfileDAO {
         $query = "SELECT*FROM perfil";
         $select = $connection->query($query);
         if ($select) {
-            while ($result = $select->fetch_array(MYSQLI_BOTH)) {
+            $list = array();
+            while ($result = $select->fetch_assoc()) {
                 $profile = new Profile();
                 $profile->setIdProfile(intval($result["idPerfil"]));
                 $profile->setName($result["nome"]);
-                $list = array();
+                
                 array_push($list,$profile);
             }
             $connection->close();
@@ -36,23 +38,26 @@ class ProfileDAO {
     }
 
     public function getProfileById(Profile $profile) {
-        $query = "SELECT*FROM profile WHERE idPerfil=?";
-        $insert = $connection->prepare($query);
-        $insert->bind_param("s", $profile->getIdProfile());
-        $insert->execute();
-        if ($result = $insert->fetch_array()) {
-            $profile = new Profile();
-            $profile->setIdProfile($result["idPerfil"]);
-            $profile->setName($result["nome"]);
+        global $connection;
+        $query = "SELECT idPerfil,nome FROM perfil WHERE idPerfil=?";
+        $select = $connection->prepare($query);
+        $select->bind_param("i", intval($profile->getIdProfile()));
+        if ($select->execute()) {
+            $select->bind_result($idProfile,$nameProfile);
+            $select->fetch();
+            $profileOBJ = new Profile();
+            $profileOBJ->setIdProfile($idProfile);
+            $profileOBJ->setName($nameProfile);
             $connection->close();
-            return $profile;
+            return $profileOBJ;
         } else {
             return false;
         }
     }
 
     public function updateProfile(Profile $profile) {
-        $query = "UPDATE profile SET nome=? WHERE idPerfil=?";
+        global $connection;
+        $query = "UPDATE perfil SET nome=? WHERE idPerfil=?";
         $update = $connection->prepare($query);
         $update->bind_param("si", $profile->getName(), $profile->getIdProfile());
         $update->execute();
@@ -61,7 +66,8 @@ class ProfileDAO {
     }
 
     public function deleteById(Profile $profile) {
-        $query = "DELETE profile WHERE idPerfil= ?";
+        global $connection;
+        $query = "DELETE perfil WHERE idPerfil= ?";
         $delete = $connection->prepare($query);
         $delete->bind_param("i", $profile->getIdProfile());
         $delete->execute();

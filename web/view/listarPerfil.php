@@ -4,8 +4,8 @@
     @Author : Pedro Henrique
 -->
 <?php
-include 'Connection.php';
-include 'model/Profile.php';
+include '../Connection.php';
+include '../model/Profile.php';
 ?>
 <html>
     <head>
@@ -17,6 +17,7 @@ include 'model/Profile.php';
         <hr>
         <?php
         $profile = new Profile();
+        
         $profileList = $profile->listProfile();
         if(empty($profileList)){
             echo "<p>Nao existem perfis cadastrados</p>";
@@ -33,7 +34,8 @@ include 'model/Profile.php';
                     echo "<tr>";
                     echo "<td>" . $value->getIdProfile() . "</td>";
                     echo "<td>" . $value->getName() . "</td>";
-                    echo "<td>" . "</td>"; // link para opções
+                    echo "<td> <a href='detalhePerfil.php?id=".$value->getIdProfile()."'>Detalhes</a>"
+                            ." / <a href='alteraPerfil.php?id=".$value->getIdProfile()."'>alterar</a> </td>"; // link para opções
                     echo "</tr>";
                 }
             
