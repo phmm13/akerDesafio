@@ -11,16 +11,16 @@
  *
  * @author Pedro Henrique
  */
+
 class UserDAO {
     
     public function insertUser(User $user){
         global $connection;
-        $query = "INSERT INTO usuario (nome,senha,perfil_idPerfil,dataCriacao,dataLogin) "
-                . "VALUES (?,?,?,STR_TO_DATE(),STR_TO_DATE())";
+        $query = "INSERT INTO usuario (nome,senha,perfil_idPerfil,dataCriacao)VALUES (?,?,?,now())";
         $insert = $connection->prepare($query);
-        $insert->bind_param("ssiss",$user->getName(),$user->getPassword(),$user->getProfile()->getIdProfile()
-                ,$user->getDateCreation(),$user->getDateLogin());
+        $insert->bind_param("ssi",$user->getName(),$user->getPassword(),$user->getProfile()->getIdProfile());
         $insert->execute();
+        $inser->close();
         $connection->close();
         return $insert;
     }
@@ -29,21 +29,23 @@ class UserDAO {
         $query = "SELECT*FROM usuario";
         $select = $connection->query($query);
         if($select){
+            $list = array();
             while($result = $select->fetch_array()){
                 $user = new User();
                 $profile = new Profile();
                 $user->setIdUser($result["idUsuario"]);
                 $user->setName($result["nome"]);
-                $user->setSenha($result["senha"]);
-                $profile->setIdProfile($result["idPerfil"]);
-                $profile->getProfileById();
+                $user->setPassword($result["senha"]);
+                $profile->setIdProfile($result["perfil_idPerfil"]);
+                $profile = $profile->getProfileById();
                 $user->setProfile($profile);
                 $user->setDateCreation($result["dataCriacao"]);
                 $user->setDateLogin($result["dataLogin"]);
-                $list = array();
+                
+                
                 array_push($list,$user);
             }
-            $connection->close();
+            $select->close();
             return $list;
         }else{
             $connection->close();
@@ -56,22 +58,24 @@ class UserDAO {
         
         $select = $connection->prepare($query);
         $select->bind_param("i",$user->getIdUser());
-        $select->execute();
-        if($result = $select->fetch_array()){
+        if($select->execute()){
+            $select->bind_result($idUser,$nameUser,$passwordUser,$idPerfilUser,$dateCreation,$dateLogin);
+            $select->fetch();
             $user = new User();
             $profile = new Profile();
             
-            $user->setIdUser($result["idUsuario"]);
-            $user->setName($result["nome"]);
-            $user->setPassword($result["senha"]);
+            $user->setIdUser($idUser);
+            $user->setName($nameUser);
+            $user->setPassword($passwordUser);
             
-            $profile->setIdProfile($result["perfil_idPerfil"]);
-            $profile->getProfileById();
+            $profile->setIdProfile($idPerfilUser);
+            $profile = $profile->getProfileById();
             
             $user->setProfile($profile);
-            $user->setDateCreation($result["dataCriacao"]);
-            $user->setDateLogin($result["dataLogin"]);
+            $user->setDateCreation($dateCreation);
+            $user->setDateLogin($dateLogin);
             
+            $select->close();
             $connection->close();
             return $user;
         }else{
@@ -86,6 +90,7 @@ class UserDAO {
         $insert->bind_param("ssii",$user->getName(),$user->getPassword(),$user->getProfile()->getIdProfile()
                 ,$user->getIdUser());
         $insert->execute();
+        $update->close();
         $connection->close();
         return $insert;
     }
@@ -95,6 +100,7 @@ class UserDAO {
         $delete = $connection->prepare($query);
         $delete->bind_param("i",$user->getIdUser());
         $delete->execute();
+        $delete->close();
         $connection->close();
         return $delete;
     }
@@ -106,6 +112,7 @@ class UserDAO {
         if($select > 0){
             $query2 = "UPDATE usuario SET dataLogin = now()";
             $update->query($query2);
+            $select->close();
             $connection->close();
             return $select;
         }else{

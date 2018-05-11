@@ -5,6 +5,7 @@
  *
  * @Author Pedro Henrique
  */
+include '../DAO/userDAO.php';
 class User {
     private $idUser;
     private $name;
@@ -48,5 +49,25 @@ class User {
     }
     public function getProfile(){
         return $this->profile;
+    }
+    public function insertUser(){
+        $userDAO = new UserDAO();
+        return $userDAO->insertUser($this);
+    }
+    public function listUser(){
+        $userDAO = new UserDAO();
+        return $userDAO->listUser();
+    }
+    public function updateUser(User $user){
+        $userDAO = new UserDAO();
+        return $userDAO->updateUser($user);
+    }
+    public function getUserById(){
+        $userDAO = new UserDAO();
+        return $userDAO->getUserById($this);
+    }
+    public function deleteUser(){
+        $userDAO = new UserDAO();
+        return $userDAO->deleteUser($this);
     }
 }

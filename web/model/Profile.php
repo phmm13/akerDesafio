@@ -5,7 +5,7 @@
  *
  * @Author Pedro Henrique
  */
-require '../DAO/ProfileDAO.php';
+include '../DAO/ProfileDAO.php';
 class profile {
     var $idProfile;
     var $name;

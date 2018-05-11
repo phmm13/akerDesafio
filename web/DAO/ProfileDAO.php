@@ -13,6 +13,7 @@ class ProfileDAO {
         $insert = $connection->prepare($query);
         $insert->bind_param("s", $profile->getName());
         $insert->execute();
+        $insert->close();
         $connection->close();
         return $insert;
     }
@@ -39,8 +40,14 @@ class ProfileDAO {
 
     public function getProfileById(Profile $profile) {
         global $connection;
-        $query = "SELECT idPerfil,nome FROM perfil WHERE idPerfil=?";
-        $select = $connection->prepare($query);
+        $query = "SELECT * FROM perfil WHERE idPerfil=?";
+        var_dump($profile);
+        if($select = $connection->prepare($query)){
+            
+        }else{
+            $error = $connection->errno . ' ' . $connection->error;
+            echo $error;
+        }
         $select->bind_param("i", intval($profile->getIdProfile()));
         if ($select->execute()) {
             $select->bind_result($idProfile,$nameProfile);
@@ -48,7 +55,7 @@ class ProfileDAO {
             $profileOBJ = new Profile();
             $profileOBJ->setIdProfile($idProfile);
             $profileOBJ->setName($nameProfile);
-            $connection->close();
+            $select->close();
             return $profileOBJ;
         } else {
             return false;
@@ -61,6 +68,7 @@ class ProfileDAO {
         $update = $connection->prepare($query);
         $update->bind_param("si", $profile->getName(), $profile->getIdProfile());
         $update->execute();
+        $update->close();
         $connection->close();
         return $update;
     }
@@ -71,6 +79,7 @@ class ProfileDAO {
         $delete = $connection->prepare($query);
         $delete->bind_param("i", $profile->getIdProfile());
         $delete->execute();
+        $delete->close();
         $connection->close();
         return $delete;
     }
