@@ -58,9 +58,9 @@ class User {
         $userDAO = new UserDAO();
         return $userDAO->listUser();
     }
-    public function updateUser(User $user){
+    public function updateUser(){
         $userDAO = new UserDAO();
-        return $userDAO->updateUser($user);
+        return $userDAO->updateUser($this);
     }
     public function getUserById(){
         $userDAO = new UserDAO();
@@ -69,5 +69,9 @@ class User {
     public function deleteUser(){
         $userDAO = new UserDAO();
         return $userDAO->deleteUser($this);
+    }
+    public function notMyProfile(){
+        $userDAO = new UserDAO();
+        return $userDAO->notMyProfile($this);
     }
 }

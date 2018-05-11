@@ -11,7 +11,9 @@ class profile {
     var $name;
     
     public function setIdProfile($idProfile){
-        $this->idProfile = $idProfile;
+        //var_dump($idProfile);
+        //phpinfo();
+        $this->idProfile =  $idProfile;
     }
     public function getIdProfile(){
         return $this->idProfile;

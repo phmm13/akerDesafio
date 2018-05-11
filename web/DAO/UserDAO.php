@@ -25,7 +25,10 @@ class UserDAO {
     }
     public function listUser(){
         global $connection;
-        $query = "SELECT*FROM usuario";
+        $query = "SELECT idUsuario,nome,senha,perfil_idPerfil,"
+                . "DATE_FORMAT(dataCriacao,'%d/%m/%y  %H:%i:%s') as dataCriacao,"
+                . "DATE_FORMAT(dataLogin,'%d/%m/%y  %H:%i:%s') as dataLogin FROM usuario";
+        
         $select = $connection->query($query);
         if($select){
             $list = array();
@@ -35,9 +38,12 @@ class UserDAO {
                 $user->setIdUser($result["idUsuario"]);
                 $user->setName($result["nome"]);
                 $user->setPassword($result["senha"]);
-                $profile->setIdProfile($result["perfil_idPerfil"]);
+                
+                $profile->setIdProfile((int)$result["perfil_idPerfil"]);
                 $profile = $profile->getProfileById();
+                
                 $user->setProfile($profile);
+                
                 $user->setDateCreation($result["dataCriacao"]);
                 $user->setDateLogin($result["dataLogin"]);
                 
@@ -52,9 +58,13 @@ class UserDAO {
     }
     public function getUserById(User $user){
         global $connection;
-        $query = "SELECT*FROM usuario WHERE idUsuario = ?";
+        $query = "SELECT idUsuario,nome,senha,perfil_idPerfil,"
+                . "DATE_FORMAT(dataCriacao,'%d/%m/%y  %H:%i:%s') as dataCriacao,"
+                . "DATE_FORMAT(dataLogin,'%d/%m/%y  %H:%i:%s') as dataLogin FROM usuario"
+                . " WHERE idUsuario = ?";
         
         $select = $connection->prepare($query);
+        var_dump($select);
         $select->bind_param("i",$user->getIdUser());
         if($select->execute()){
             $select->bind_result($idUser,$nameUser,$passwordUser,$idPerfilUser,$dateCreation,$dateLogin);
@@ -90,7 +100,7 @@ class UserDAO {
                 ,$user->getIdUser());
         $update->execute();
         $update->close();
-        return $insert;
+        return $update;
     }
     public function deleteUser(User $user){
         global $connection;
@@ -112,6 +122,29 @@ class UserDAO {
             $update->close();
             $select->close();
             return $select;
+        }else{
+            return false;
+        }
+    }
+    public function notMyProfile(User $user){
+        global $connection;
+        $query = "SELECT * FROM perfil WHERE idPerfil not in "
+                . "(SELECT p.idPerfil FROM perfil as p, usuario as u "
+                . "WHERE p.idPerfil = u.perfil_idPerfil AND p.idPerfil = ?)";
+        $select = $connection->prepare($query);
+        $select->bind_param("i",$user->getProfile()->getIdProfile());
+        if($select->execute()){
+            $list = array();
+            $select->bind_result($idProfile,$idName);
+            while($select->fetch()){
+                $profile = new Profile();
+                $profile->setIdProfile($idProfile);
+                $profile->setName($idName);
+                
+                array_push($list,$profile);
+            }
+            $select->close();
+            return $list;
         }else{
             return false;
         }

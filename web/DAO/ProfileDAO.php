@@ -41,10 +41,13 @@ class ProfileDAO {
         global $connection;
         $query = "SELECT * FROM perfil WHERE idPerfil=?";
         $select = $connection->prepare($query);
-        
-        $select->bind_param("i", $profile->getIdProfile());
-        if ($select->execute()) {
-            $select->bind_result($idProfile,$nameProfile);
+
+        $idProfile = $profile->getIdProfile();
+        $nameProfile = "";
+        $select->bind_param("i", $idProfile);
+        $select->execute();
+        $select->bind_result($idProfile,$nameProfile);
+        if ($idProfile) {
             $select->fetch();
             $profileOBJ = new Profile();
             $profileOBJ->setIdProfile($idProfile);

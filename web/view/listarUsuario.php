@@ -47,9 +47,11 @@
             <?php
                 foreach($listUser as $value){
                     $profile = new Profile();
-                    $profile->setIdProfile($value->getProfile());
-                    $profile = $profile->getProfileById();
                     
+                    
+                    $profile->setIdProfile($value->getProfile()->getIdProfile());
+                    
+                    $profile = $profile->getProfileById();
                     echo "<tr>";
                     echo "<td>" . $value->getIdUser() . "</td>";
                     echo "<td>" . $value->getName() . "</td>";
@@ -57,7 +59,7 @@
                     echo "<td>" . $value->getDateCreation() . "</td>";
                     echo "<td>" . $value->getDateLogin() . "</td>";
                     echo "<td> <a href='detalheUsuario.php?id=".$value->getIdUser()."'>Detalhes</a>".
-                            " / <a href='alterarUsuario.php?id=".$value->getIdUser()."'>Alterar</a>";
+                            " / <a href='alteraUsuario.php?id=".$value->getIdUser()."'>Alterar</a>";
                     echo "</tr>";
                 }
             ?>
