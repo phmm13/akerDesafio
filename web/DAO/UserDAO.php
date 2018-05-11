@@ -20,8 +20,7 @@ class UserDAO {
         $insert = $connection->prepare($query);
         $insert->bind_param("ssi",$user->getName(),$user->getPassword(),$user->getProfile()->getIdProfile());
         $insert->execute();
-        $inser->close();
-        $connection->close();
+        $insert->close();
         return $insert;
     }
     public function listUser(){
@@ -48,7 +47,6 @@ class UserDAO {
             $select->close();
             return $list;
         }else{
-            $connection->close();
             return false;
         }
     }
@@ -68,30 +66,30 @@ class UserDAO {
             $user->setName($nameUser);
             $user->setPassword($passwordUser);
             
-            $profile->setIdProfile($idPerfilUser);
-            $profile = $profile->getProfileById();
             
-            $user->setProfile($profile);
             $user->setDateCreation($dateCreation);
             $user->setDateLogin($dateLogin);
-            
             $select->close();
-            $connection->close();
+            
+            $profile->setIdProfile($idPerfilUser);
+            $profile = $profile->getProfileById();
+            $user->setProfile($profile);
+            
+            
+            
             return $user;
         }else{
-            $connection->close();
             return false;
         }
     }
     public function updateUser(User $user){
         global $connection;
         $query = "UPDATE usuario SET nome=?,senha=?,perfil_idPerfil=? WHERE idUsuario=?";
-        $insert = $connection->prepare($query);
-        $insert->bind_param("ssii",$user->getName(),$user->getPassword(),$user->getProfile()->getIdProfile()
+        $update = $connection->prepare($query);
+        $update->bind_param("ssii",$user->getName(),$user->getPassword(),$user->getProfile()->getIdProfile()
                 ,$user->getIdUser());
-        $insert->execute();
+        $update->execute();
         $update->close();
-        $connection->close();
         return $insert;
     }
     public function deleteUser(User $user){
@@ -101,7 +99,6 @@ class UserDAO {
         $delete->bind_param("i",$user->getIdUser());
         $delete->execute();
         $delete->close();
-        $connection->close();
         return $delete;
     }
     public function login(User $user){
@@ -112,8 +109,8 @@ class UserDAO {
         if($select > 0){
             $query2 = "UPDATE usuario SET dataLogin = now()";
             $update->query($query2);
+            $update->close();
             $select->close();
-            $connection->close();
             return $select;
         }else{
             return false;
