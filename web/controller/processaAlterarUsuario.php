@@ -3,9 +3,9 @@
     @Author : Pedro Henrique
 -->
 <?php
-    include '../Connection.php';
-    include '../model/User.php';
-    include '../model/Profile.php';
+    include_once '../Connection.php';
+    include_once '../model/User.php';
+    include_once '../model/Profile.php';
     
     $idUser = $_POST['id'];
     $name = $_POST['nome'];

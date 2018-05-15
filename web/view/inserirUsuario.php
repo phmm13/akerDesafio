@@ -4,9 +4,10 @@
     @Author : Pedro Henrique
 -->
 <?php
-    include '../Connection.php';
-    include '../model/Profile.php';
-    include '../model/User.php';
+    include_once '../Connection.php';
+    //include_once '../model/Profile.php';
+    include_once '../model/User.php';
+    include_once "../verificacaoLogin.php";
     $user = new User();
     $profile = new Profile();
     $profileList = $profile->listProfile();

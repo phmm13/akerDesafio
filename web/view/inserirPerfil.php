@@ -3,6 +3,9 @@
 <!-- 
     @Author : Pedro Henrique
 -->
+<?php
+include_once "../verificacaoLogin.php";
+?>
 <html>
     <head>
         <meta charset="UTF-8">

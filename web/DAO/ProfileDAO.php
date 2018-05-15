@@ -72,13 +72,14 @@ class ProfileDAO {
 
     public function deleteById(Profile $profile) {
         global $connection;
-        $query = "DELETE perfil WHERE idPerfil= ?";
+        $query = "DELETE FROM perfil WHERE idPerfil= ?";
         $delete = $connection->prepare($query);
         $delete->bind_param("i", $profile->getIdProfile());
         $delete->execute();
+        $numRows = $delete->affected_rows;
         $delete->close();
         
-        return $delete;
+        return $numRows;
     }
 
 }

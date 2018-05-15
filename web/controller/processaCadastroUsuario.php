@@ -5,9 +5,9 @@
 
 
 <?php
-    include '../Connection.php';
-    include '../model/User.php';
-    include '../model/Profile.php';
+    include_once '../Connection.php';
+    include_once '../model/User.php';
+    include_once '../model/Profile.php';
     $name = $_POST['nome'];
     $password = $_POST['password'];
     $profileId = $_POST['perfil'];

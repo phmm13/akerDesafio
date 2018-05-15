@@ -5,7 +5,7 @@
  *
  * @Author Pedro Henrique
  */
-include '../DAO/userDAO.php';
+include_once '../DAO/userDAO.php';
 class User {
     private $idUser;
     private $name;
@@ -73,5 +73,9 @@ class User {
     public function notMyProfile(){
         $userDAO = new UserDAO();
         return $userDAO->notMyProfile($this);
+    }
+    public function login(){
+        $userDAO = new UserDAO();
+        return $userDAO->login($this);
     }
 }

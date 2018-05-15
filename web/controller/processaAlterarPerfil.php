@@ -4,8 +4,8 @@
 -->
 
 <?php
-    include '../Connection.php';
-    include '../model/Profile.php';
+    include_once '../Connection.php';
+    include_once '../model/Profile.php';
     $idProfile = $_GET['id'];
     $name = $_GET['nome'];
     

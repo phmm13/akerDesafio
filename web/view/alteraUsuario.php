@@ -5,9 +5,10 @@
 -->
 
 <?php
-    include '../Connection.php';
-    include '../model/User.php';
-    include '../model/Profile.php';
+    include_once '../Connection.php';
+    include_once '../model/User.php';
+    include_once '../model/Profile.php';
+    include_once "../verificacaoLogin.php";
     
     $idUser = $_GET['id'];
     $user = new User();

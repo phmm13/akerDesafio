@@ -5,14 +5,12 @@
  *
  * @Author Pedro Henrique
  */
-include '../DAO/ProfileDAO.php';
-class profile {
+include_once '../DAO/ProfileDAO.php';
+class Profile {
     var $idProfile;
     var $name;
     
     public function setIdProfile($idProfile){
-        //var_dump($idProfile);
-        //phpinfo();
         $this->idProfile =  $idProfile;
     }
     public function getIdProfile(){
@@ -40,5 +38,9 @@ class profile {
     public function updateProfile(){
         $profileDAO = new ProfileDAO();
         return $profileDAO->updateProfile($this);
+    }
+    public function deleteProfile(){
+        $profileDAO = new ProfileDAO();
+        return $profileDAO->deleteById($this);
     }
 }

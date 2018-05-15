@@ -3,6 +3,9 @@
 <!-- 
     @Author : Pedro Henrique
 -->
+<?php
+    include_once "../verificacaoLogin.php";
+?>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -10,8 +13,8 @@
     </head>
     <body>
         <?php
-            include "../Connection.php";
-            include "../model/profile.php";
+            include_once "../Connection.php";
+            include_once "../model/profile.php";
             $idProfile = $_GET['id'];
             
             $profile = new Profile();
