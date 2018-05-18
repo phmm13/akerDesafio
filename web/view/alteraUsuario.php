@@ -44,26 +44,24 @@ $user = $user->getUserById();
         <hr>
         <div class="container">
             <form action="../controller/processaAlterarUsuario.php" method="POST">
-                <input type="hidden" name="id" value="<?php echo $user->getIdUser(); ?>">
 
                 <div class="form-group row">
-                    <label for="inputName" class="col-sm-2 col-form-label">ID</label>
                     <div class="col-sm-10">
-                        <input type="text" name="id" class="form-control" id="inputEmail3" value="<?php echo $user->getIdUser(); ?>" disabled="">
+                        <input type="hidden" name="id" class="form-control" id="inputEmail3" value="<?php echo $user->getIdUser(); ?>">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="inputName" class="col-sm-2 col-form-label">Nome usuário</label>
                     <div class="col-sm-10">
-                        <input type="text" name="nome" class="form-control" id="inputEmail3" value="<?php echo $user->getName(); ?>">
+                        <input type="text" name="nome" class="form-control" id="inputEmail3" value="<?php echo $user->getName(); ?>" required>
                     </div>
                 </div>
 
 
                 <div class="form-group row">
-                    <label for="inputName" class="col-sm-2 col-form-label">Senha</label>
+                    <label for="inputPassword" class="col-sm-2 col-form-label">Senha</label>
                     <div class="col-sm-10">
-                        <input type="text" name="password" class="form-control" id="inputEmail3" value="<?php echo $user->getName(); ?>">
+                        <input type="password" name="password" class="form-control" id="inputEmail3" value="<?php echo $user->getPassword(); ?>" required>
                     </div>
                 </div>
 
@@ -86,17 +84,17 @@ $user = $user->getUserById();
 
 
                 <div class="form-group row">
-                    <label for="inputName" class="col-sm-2 col-form-label">Data de criação</label>
+                    <label for="inputDateCreation" class="col-sm-2 col-form-label">Data de criação</label>
                     <div class="col-sm-10">
-                        <input type="text" name="id" class="form-control" id="inputEmail3" value="<?php echo $user->getDateCreation(); ?>" disabled="">
+                        <input type="text" name="dataCriacao" class="form-control" id="inputEmail3" value="<?php echo $user->getDateCreation(); ?>" disabled="">
                     </div>
                 </div>
 
 
                 <div class="form-group row">
-                    <label for="inputName" class="col-sm-2 col-form-label">Data de login</label>
+                    <label for="inputDateLogin" class="col-sm-2 col-form-label">Data de login</label>
                     <div class="col-sm-10">
-                        <input type="text" name="id" class="form-control" id="inputEmail3" value=" <?php echo $user->getDateLogin(); ?>" disabled="">
+                        <input type="text" name="dataLogin" class="form-control" id="inputEmail3" value=" <?php echo $user->getDateLogin(); ?>" disabled="">
                     </div>
                 </div>
 

@@ -7,11 +7,10 @@
     include_once '../model/User.php';
     include_once '../model/Profile.php';
     
-    $idUser = $_POST['id'];
+    $idUser = $_POST["id"];
     $name = $_POST['nome'];
-    $password = $_POST['senha'];
+    $password = $_POST['password'];
     $idProfile = $_POST['perfil'];
-
     $user = new User();
     $user->setIdUser($idUser);
     $user->setName($name);

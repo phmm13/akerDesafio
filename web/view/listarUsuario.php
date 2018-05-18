@@ -36,6 +36,7 @@ $listUser = $user->listUser();
             <li class="nav-item">
                 <a class="nav-link" href="listarUsuario.php">Exibir usuarios</a>
             </li>
+            
         </ul>
         <hr>
         <?php

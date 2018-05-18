@@ -48,7 +48,7 @@ include_once "../verificacaoLogin.php";
                 <div class="form-group row">
                     <label for="inputName" class="col-sm-2 col-form-label">Nome do Perfil</label>
                     <div class="col-sm-10">
-                        <input type="text" name="nome" class="form-control" placeholder="Perfil" value=<?php echo $profile->getName() ?>>
+                        <input type="text" name="nome" class="form-control" placeholder="Perfil" value=<?php echo $profile->getName() ?> required>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Salvar</button>

@@ -43,14 +43,14 @@ $profileList = $profile->listProfile();
                 <div class="form-group row">
                     <label for="inputName" class="col-sm-2 col-form-label">Nome usuário</label>
                     <div class="col-sm-10">
-                        <input type="text" name="nome" class="form-control" id="inputEmail3" placeholder="Email">
+                        <input type="text" name="nome" class="form-control" id="inputEmail3" placeholder="Email" required>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="inputPassword" class="col-sm-2 col-form-label">Senha</label>
                     <div class="col-sm-10">
-                        <input type="password" name="password" class="form-control" id="inputEmail3" placeholder="Email">
+                        <input type="password" name="password" class="form-control" id="inputEmail3" placeholder="Email" required>
                     </div>
                 </div>
 
